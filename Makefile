@@ -83,6 +83,24 @@ SM8650:
 	unset DEVICE_ROOT
 	PROJECT=ROCKNIX DEVICE=SM8650 ARCH=aarch64 ./scripts/build_distro
 
+RPi5:
+	unset DEVICE_ROOT
+	PROJECT=RPi DEVICE=RPi5 ARCH=arm ./scripts/build_distro
+	PROJECT=RPi DEVICE=RPi5 ARCH=aarch64 ./scripts/build_distro
+
+RPi4:
+	unset DEVICE_ROOT
+	PROJECT=RPi DEVICE=RPi4 ARCH=arm ./scripts/build_distro
+	PROJECT=RPi DEVICE=RPi4 ARCH=aarch64 ./scripts/build_distro
+
+RPi2:
+	unset DEVICE_ROOT
+	PROJECT=RPi DEVICE=RPi2 ARCH=arm ./scripts/build_distro
+
+RPi:
+	unset DEVICE_ROOT
+	PROJECT=RPi DEVICE=RPi ARCH=arm ./scripts/build_distro
+
 update:
 	PROJECT=ROCKNIX DEVICE=RK3588 ARCH=aarch64 ./scripts/update_packages
 
