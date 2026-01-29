@@ -63,17 +63,19 @@ make docker-RPi5
 The build process will:
 1. Pull the latest ROCKNIX build container
 2. Compile all necessary packages
-3. Create the system image
+3. Create the system images (both 32-bit and 64-bit)
 
 This process can take several hours (2-8 hours depending on your hardware).
 
 #### 4. Find Your Image
 
-After the build completes, you'll find the image in the `release` directory:
+After the build completes, you'll find the images in the `release` directory:
 
 ```bash
 ls -lh release/
-# Look for files like: ROCKNIX-RPi5.aarch64-YYYYMMDD.img.gz
+# Look for files like: 
+# ROCKNIX-RPi5.aarch64-YYYYMMDD.img.gz (64-bit, recommended)
+# ROCKNIX-RPi5.arm-YYYYMMDD.img.gz (32-bit)
 ```
 
 ### Method 2: Native Build (Advanced)
@@ -151,7 +153,9 @@ CUSTOM_VERSION="my-custom-build"
 
 ## Installation
 
-### 1. Extract the Image
+### 1. Extract the Image (Optional)
+
+**Note:** Balena Etcher and Raspberry Pi Imager can work with compressed `.img.gz` files directly. You only need to extract the image if using the `dd` command.
 
 ```bash
 gunzip release/ROCKNIX-RPi5.aarch64-*.img.gz

@@ -19,7 +19,7 @@ En sistemas Ubuntu/Debian, necesitarás instalar varias dependencias de compilac
 Las dependencias comunes incluyen:
 - gcc, g++, make
 - git
-- xsltproc, xmlstarstar
+- xsltproc, xmlstarlet
 - gperf
 - Varias herramientas de procesamiento de fuentes e imágenes
 
@@ -63,17 +63,19 @@ make docker-RPi5
 El proceso de compilación:
 1. Descargará el contenedor de compilación de ROCKNIX más reciente
 2. Compilará todos los paquetes necesarios
-3. Creará la imagen del sistema
+3. Creará las imágenes del sistema (32 y 64 bits)
 
 Este proceso puede tardar varias horas (2-8 horas dependiendo de tu hardware).
 
 #### 4. Encontrar tu Imagen
 
-Después de que la compilación se complete, encontrarás la imagen en el directorio `release`:
+Después de que la compilación se complete, encontrarás las imágenes en el directorio `release`:
 
 ```bash
 ls -lh release/
-# Busca archivos como: ROCKNIX-RPi5.aarch64-YYYYMMDD.img.gz
+# Busca archivos como:
+# ROCKNIX-RPi5.aarch64-YYYYMMDD.img.gz (64-bit, recomendado)
+# ROCKNIX-RPi5.arm-YYYYMMDD.img.gz (32-bit)
 ```
 
 ### Método 2: Compilación Nativa (Avanzado)
@@ -151,7 +153,9 @@ CUSTOM_VERSION="mi-compilacion-personalizada"
 
 ## Instalación
 
-### 1. Extraer la Imagen
+### 1. Extraer la Imagen (Opcional)
+
+**Nota:** Balena Etcher y Raspberry Pi Imager pueden trabajar directamente con archivos comprimidos `.img.gz`. Solo necesitas extraer la imagen si usas el comando `dd`.
 
 ```bash
 gunzip release/ROCKNIX-RPi5.aarch64-*.img.gz

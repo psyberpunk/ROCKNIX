@@ -32,16 +32,16 @@ You'll need a Linux build environment with the necessary dependencies installed.
 The easiest way to build ROCKNIX is using Docker:
 
 ```bash
-# For Raspberry Pi 5 (64-bit)
+# For Raspberry Pi 5 (builds both 32-bit and 64-bit)
 make docker-RPi5
 
-# For Raspberry Pi 4 (64-bit)
+# For Raspberry Pi 4 (builds both 32-bit and 64-bit)
 make docker-RPi4
 
-# For Raspberry Pi 2 (32-bit)
+# For Raspberry Pi 2 (32-bit only)
 make docker-RPi2
 
-# For Raspberry Pi 1/Zero (32-bit)
+# For Raspberry Pi 1/Zero (32-bit only)
 make docker-RPi
 ```
 
@@ -95,7 +95,7 @@ PROJECT=RPi DEVICE=RPi5 ARCH=aarch64 ./scripts/image
 
 ## Notes
 
-- Raspberry Pi 5 requires a 64-bit build (ARCH=aarch64)
+- Raspberry Pi 5 is recommended to use 64-bit build (ARCH=aarch64) but also supports 32-bit
 - Raspberry Pi 4 works best with the 64-bit build but also supports 32-bit
 - Raspberry Pi 2 requires a 32-bit build (ARCH=arm)
 - Raspberry Pi 1/Zero requires a 32-bit build (ARCH=arm)
