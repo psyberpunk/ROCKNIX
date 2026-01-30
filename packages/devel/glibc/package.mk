@@ -87,6 +87,9 @@ pre_configure_target() {
 
   # configure step misconfigures with gcc 15 unless this error is degraded to a warning
   export CFLAGS="${CFLAGS} -Wno-error=implicit-function-declaration"
+  
+  # timezone code has attribute placement issues with gcc 15
+  export CFLAGS="${CFLAGS} -Wno-error=attributes"
 
   export BUILD_CC=${HOST_CC}
   export OBJDUMP_FOR_HOST=objdump
