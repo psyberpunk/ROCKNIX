@@ -3,19 +3,32 @@
 # Copyright (C) 2018-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="glibc"
-PKG_VERSION="2.41"
-PKG_SHA256="e4e05d553df8374f43562c3c76d5edf7a7bcff3faf6a7b5aebfebecc57695eff"
+PKG_VERSION="2.40"
 PKG_LICENSE="GPL"
-PKG_SITE="https://launchpad.net/glibc/"
-PKG_URL="https://launchpad.net/glibc/head/2.41/+download/glibc-2.41.tar.gz"
-PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap Python3:host"
+PKG_SITE="https://www.gnu.org/software/libc/"
+PKG_URL="https://ftp.gnu.org/pub/gnu/glibc/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap pigz:host Python3:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
-PKG_BUILD_FLAGS="+bfd"
+PKG_BUILD_FLAGS="+bfd -gold"
 
-if [ "${TARGET_ARCH}" = "arm" ] || [ "${TARGET_ARCH}" = "aarch64" ]; then
-  PKG_PATCH_DIRS="widevine-arm"
-fi
+case "${DEVICE}" in
+  RK3588*)
+    OPT_ENABLE_KERNEL=6.1.0
+  ;;
+  SDM845)
+    OPT_ENABLE_KERNEL=5.18.0
+  ;;
+  *)
+    OPT_ENABLE_KERNEL=6.10.0
+  ;;
+esac
+
+case ${TARGET_ARCH} in
+  arm|aarch64)
+    PKG_PATCH_DIRS="widevine-arm"
+    ;;
+esac
 
 PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            ac_cv_path_PERL=no \
@@ -31,7 +44,7 @@ PKG_CONFIGURE_OPTS_TARGET="BASH_SHELL=/bin/sh \
                            --with-__thread \
                            --with-binutils=${BUILD}/toolchain/bin \
                            --with-headers=${SYSROOT_PREFIX}/usr/include \
-                           --enable-kernel=6.12.0 \
+                           --enable-kernel=${OPT_ENABLE_KERNEL} \
                            --without-cvs \
                            --without-gd \
                            --disable-build-nscd \
@@ -49,10 +62,8 @@ post_unpack() {
 }
 
 pre_configure_target() {
-  # Filter out some problematic *FLAGS
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-ffast-math||g")
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Ofast|-O2|g")
-  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-O.|-O2|g")
+# Filter out some problematic *FLAGS
+  export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-O.|-O3|g")
 
   export CFLAGS=$(echo ${CFLAGS} | sed -e "s|-Wunused-but-set-variable||g")
   export CFLAGS="${CFLAGS} -Wno-unused-variable"
@@ -61,9 +72,7 @@ pre_configure_target() {
     export CFLAGS=$(echo ${CFLAGS} | sed -e "s|${PROJECT_CFLAGS}||g")
   fi
 
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-ffast-math||g")
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-Ofast|-O2|g")
-  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-O.|-O2|g")
+  export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-O.|-O3|g")
 
   export LDFLAGS=$(echo ${LDFLAGS} | sed -e "s|-Wl,--as-needed||")
 
@@ -101,18 +110,12 @@ post_makeinstall_target() {
     cp -a ${INSTALL}/usr/share/i18n/locales ${INSTALL}/.noinstall
     mv ${INSTALL}/usr/share/i18n/charmaps ${INSTALL}/.noinstall
 
-  # cleanup
-  # remove any programs we don't want/need, keeping only those we want
-  for f in $(find ${INSTALL}/usr/bin -type f); do
-    listcontains "${GLIBC_INCLUDE_BIN}" "$(basename "${f}")" || safe_remove "${f}"
-  done
-
   safe_remove ${INSTALL}/usr/lib/audit
   safe_remove ${INSTALL}/usr/lib/glibc
   safe_remove ${INSTALL}/usr/lib/*.o
   safe_remove ${INSTALL}/var
 
-  # add UTF-8 charmap
+# add UTF-8 charmap
   mkdir -p ${INSTALL}/usr/share/i18n/charmaps
     cp -PR ${INSTALL}/.noinstall/charmaps/UTF-8.gz ${INSTALL}/usr/share/i18n/charmaps
 
@@ -123,11 +126,12 @@ post_makeinstall_target() {
       cp -PR ${PKG_BUILD}/localedata/locales/POSIX ${INSTALL}/usr/share/i18n/locales
   fi
 
-  # create default configs
+# create default configs
   mkdir -p ${INSTALL}/etc
     cp ${PKG_DIR}/config/nsswitch-target.conf ${INSTALL}/etc/nsswitch.conf
     cp ${PKG_DIR}/config/host.conf ${INSTALL}/etc
     cp ${PKG_DIR}/config/gai.conf ${INSTALL}/etc
+    cp ${PKG_DIR}/config/ld.so.conf ${INSTALL}/etc
 }
 
 configure_init() {
@@ -151,7 +155,7 @@ makeinstall_init() {
 }
 
 post_makeinstall_init() {
-  # create default configs
+# create default configs
   mkdir -p ${INSTALL}/etc
     cp ${PKG_DIR}/config/nsswitch-init.conf ${INSTALL}/etc/nsswitch.conf
 }
