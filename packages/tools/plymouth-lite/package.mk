@@ -9,6 +9,7 @@ PKG_SITE="http://www.meego.com"
 PKG_URL="${DISTRO_SRC}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
 PKG_DEPENDS_INIT="toolchain gcc:init libpng"
 PKG_LONGDESC="Boot splash screen based on Fedora's Plymouth code"
+PKG_TOOLCHAIN="make"
 
 pre_configure_init() {
   # plymouth-lite dont support to build in subdirs
