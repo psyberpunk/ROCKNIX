@@ -4,10 +4,10 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="2.41"
-PKG_SHA256="c7be6e25eeaf4b956f5d4d56a04d23e4db453fc07760f872903bb61a49519b80"
+PKG_SHA256="e4e05d553df8374f43562c3c76d5edf7a7bcff3faf6a7b5aebfebecc57695eff"
 PKG_LICENSE="GPL"
-PKG_SITE="https://mirrors.ocf.berkeley.edu/gnu/libc/glibc-2.41.tar.gz"
-PKG_URL="https://mirrors.ocf.berkeley.edu/gnu/libc/glibc-2.41.tar.gz"
+PKG_SITE="https://launchpad.net/glibc/"
+PKG_URL="https://launchpad.net/glibc/head/2.41/+download/glibc-2.41.tar.gz"
 PKG_DEPENDS_TARGET="ccache:host autotools:host linux:host gcc:bootstrap Python3:host"
 PKG_DEPENDS_INIT="glibc"
 PKG_LONGDESC="The Glibc package contains the main C library."
