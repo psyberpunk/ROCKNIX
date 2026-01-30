@@ -7,8 +7,11 @@ PKG_SHA256="fa7b581bdd38c5751668243ff9d2ebaee7c45753358cbb310fb50cfcd3a8081b"
 PKG_LICENSE="GPL"
 PKG_SITE="http://www.meego.com"
 PKG_URL="${DISTRO_SRC}/${PKG_NAME}-${PKG_VERSION}.tar.bz2"
+PKG_DEPENDS_TARGET="plymouth-lite:init"
 PKG_DEPENDS_INIT="toolchain gcc:init libpng"
 PKG_LONGDESC="Boot splash screen based on Fedora's Plymouth code"
+PKG_TOOLCHAIN="make"
+PKG_SECTION="virtual"
 
 pre_configure_init() {
   # plymouth-lite dont support to build in subdirs
