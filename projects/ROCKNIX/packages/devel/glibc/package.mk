@@ -85,6 +85,9 @@ pre_configure_target() {
   # set some CFLAGS we need
   export CFLAGS="${CFLAGS} -g -fno-stack-protector"
 
+  # configure step misconfigures with gcc 15 unless this error is degraded to a warning
+  export CFLAGS="${CFLAGS} -Wno-error=implicit-function-declaration"
+
   export BUILD_CC=${HOST_CC}
   export OBJDUMP_FOR_HOST=objdump
 
