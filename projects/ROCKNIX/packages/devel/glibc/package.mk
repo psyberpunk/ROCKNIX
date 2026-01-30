@@ -20,6 +20,9 @@ case "${DEVICE}" in
   SDM845)
     OPT_ENABLE_KERNEL=5.18.0
   ;;
+  RPi5)
+    OPT_ENABLE_KERNEL=6.6.0
+  ;;
   *)
     OPT_ENABLE_KERNEL=6.10.0
   ;;
