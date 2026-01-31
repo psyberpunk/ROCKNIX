@@ -3,29 +3,29 @@
 # Copyright (C) 2017-present Team LibreELEC (https://libreelec.tv)
 
 PKG_NAME="bcm2835-bootloader"
-PKG_VERSION="0ea28740607daed588912930379ed6ad40cfc4be"
-PKG_SHA256="6a5db84e4b5c4f3c45222ace9269e8775b6fc7f4ff032353f177d7d51ff77c25"
+PKG_VERSION="8afbe608658d2ad0093df191afb6135d6a8326bc"
+PKG_SHA256="acde6ead1bf7173ac118318c54c4845b5e70b3016710e8b0365023ff49c76ab9"
 PKG_ARCH="arm aarch64"
 PKG_LICENSE="nonfree"
-PKG_SITE="http://www.broadcom.com"
-PKG_URL="${DISTRO_SRC}/${PKG_NAME}-${PKG_VERSION}.tar.xz"
+PKG_SITE="https://github.com/raspberrypi/firmware"
+PKG_URL="https://github.com/raspberrypi/firmware.git"
 PKG_DEPENDS_TARGET="toolchain linux bcmstat"
 PKG_LONGDESC="bcm2835-bootloader: Tool to create a bootable kernel for RaspberryPi"
 PKG_TOOLCHAIN="manual"
 
 makeinstall_target() {
   mkdir -p ${INSTALL}/usr/share/bootloader
-    cp -PRv LICENCE* ${INSTALL}/usr/share/bootloader
+    cp -PRv boot/LICENCE* ${INSTALL}/usr/share/bootloader
     case "${DEVICE}" in
       RPi4)
-        cp -PRv fixup4x.dat ${INSTALL}/usr/share/bootloader/fixup.dat
-        cp -PRv start4x.elf ${INSTALL}/usr/share/bootloader/start.elf
+        cp -PRv boot/fixup4x.dat ${INSTALL}/usr/share/bootloader/fixup.dat
+        cp -PRv boot/start4x.elf ${INSTALL}/usr/share/bootloader/start.elf
         ;;
       RPi5) ;;
       *)
-        cp -PRv bootcode.bin ${INSTALL}/usr/share/bootloader
-        cp -PRv fixup_x.dat ${INSTALL}/usr/share/bootloader/fixup.dat
-        cp -PRv start_x.elf ${INSTALL}/usr/share/bootloader/start.elf
+        cp -PRv boot/bootcode.bin ${INSTALL}/usr/share/bootloader
+        cp -PRv boot/fixup_x.dat ${INSTALL}/usr/share/bootloader/fixup.dat
+        cp -PRv boot/start_x.elf ${INSTALL}/usr/share/bootloader/start.elf
         ;;
     esac
 
