@@ -69,7 +69,7 @@ if [ -z "${DIRTY}" ]; then
     echo "Clean: ${package}"
     ./scripts/clean "${package}" 2>/dev/null || true
   done
-  rm -rf build.${DISTRO}-${DEVICE_ROOT}.${ARCH}/{.stamps/initramfs,initramfs}
+  rm -rf build.${DISTRO}-${DEVICE_ROOT:-${DEVICE}}.${ARCH}/{.stamps/initramfs,initramfs}
 fi
 
 # Prune old releases
