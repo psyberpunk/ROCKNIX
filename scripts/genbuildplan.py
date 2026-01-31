@@ -231,7 +231,7 @@ def get_build_steps(args, nodes):
         eprint("The following dependencies have not been resolved:")
         for dep in unresolved:
             eprint(f"  {dep}")
-        raise("Unresolved references")
+        raise Exception("Unresolved references")
 
     # Output list of resolved dependencies
     for pkg in resolved:
