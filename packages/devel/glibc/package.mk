@@ -4,7 +4,7 @@
 
 PKG_NAME="glibc"
 PKG_VERSION="2.40"
-PKG_SHA256="319b6e3f4c1f6da4f7d368fb1906d0f577d9b18c66f63e91b9fe7ab9f0b18c80"
+PKG_SHA256="19a890175e9263d748f627993de6f4b1af9cd21e03f080e4bfb3a1fac10205a2"
 PKG_LICENSE="GPL"
 PKG_SITE="https://www.gnu.org/software/libc/"
 PKG_URL="https://ftp.gnu.org/pub/gnu/glibc/${PKG_NAME}-${PKG_VERSION}.tar.xz"
