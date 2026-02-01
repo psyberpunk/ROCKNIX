@@ -256,7 +256,7 @@ if [ -f "${PKG_CONFIGURE_SCRIPT}" -o -f "${PKG_CMAKE_SCRIPT}" -o -f "${PKG_MESON
   mkdir -p "${PKG_REAL_BUILD}"
   cd "${PKG_REAL_BUILD}"
 
-  MESON_CONF="${PKG_REAL_BUILD}/meson.conf"
+  MESON_CONF="${PKG_BUILD}/meson.conf"
 fi
 
 # create wrapper scripts in build dir and use them for CC/CXX when
